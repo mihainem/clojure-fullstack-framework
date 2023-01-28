@@ -1,9 +1,44 @@
 (ns xo.router
-  (:require [reitit.ring :as ring]
-            [xo.routes :as r]))
+  (:require
+    [muuntaja.core :as m]
+    [reitit.ring :as ring]
+    [reitit.ring.middleware.exception :as rrmex]
+    [reitit.ring.middleware.muuntaja :as muuntaja]
+    [reitit.swagger :as swagger]
+    [reitit.swagger-ui :as swagger-ui]
+    [xo.routes :as r]))
+
+(def swagger-docs
+  ["/swagger.json"
+   {:get {:no-doc true
+          ;; :summary "Swagger JSON"
+          :swagger {:basePath "/"
+                    :info {:title "XO API"
+                           :description "XO API"
+                           :version "1.0.0"}}
+          ;; :responses {200 {:schema swagger/Schema}}
+          :handler (swagger/create-swagger-handler)}}])
+
+(def router-config
+  {:data {;; :coercion   reitit.coercion.spec/coercion
+          :muuntaja m/instance
+          :middleware [swagger/swagger-feature
+                       muuntaja/format-negotiate-middleware
+                       muuntaja/format-response-middleware
+                       rrmex/exception-middleware
+                       muuntaja/format-request-middleware]}})
 
 (defn routes
   [env]
   (ring/ring-handler
-   (ring/router
-    [["/v1" (r/routes env)]])))
+    (ring/router
+      [swagger-docs
+       ["/v1"
+        (r/routes env)]]
+      router-config)
+    (ring/routes
+      (swagger-ui/create-swagger-ui-handler {:path "/"})
+      (ring/redirect-trailing-slash-handler)
+      (ring/create-default-handler
+        {:not-found (constantly {:status 404
+                                 :body "Route not found"})}))))

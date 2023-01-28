@@ -1,19 +1,16 @@
 (ns user
-  (:require [integrant.repl :as ig-repl]
-            [integrant.core :as ig]
-            [integrant.repl.state :as state]))
+  (:require
+    [integrant-setup :refer [app go halt reset]]
+    [integrant.core :as ig]))
 
+(defn backend
+  [config]
+  (-> config ig/prep ig/init))
 
-(ig-repl/set-prep!
- (fn [] (-> "resources/config.edn" slurp ig/read-string)))
-
-(def go ig-repl/go)
-(def halt ig-repl/halt)
-(def reset ig-repl/reset)
-(def reset-all ig-repl/reset-all)
-
-(def app  (-> state/system :server/app))
-(def db  (-> state/system :db/postgress))
+(defn dev
+  [config-file]
+  (let [config (-> config-file slurp ig/read-string)]
+    (backend config)))
 
 (comment
   (app {:request-method :get

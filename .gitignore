@@ -5,3 +5,5 @@
 .nrepl-port
 .env
 .temp
+target/
+

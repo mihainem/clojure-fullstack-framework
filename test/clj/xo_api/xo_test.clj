@@ -1,5 +1,6 @@
 (ns xo-api.xo-test
-  (:require [clojure.test :refer [deftest testing is]]))
+  (:require
+    [clojure.test :refer [deftest testing is]]))
 
 (deftest name-test
   (testing "Context of the test assertions"
