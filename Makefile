@@ -1,7 +1,7 @@
 .PHONY: run
 run:
 	@echo "Running..."
-	clj -M:test:dev
+	clj -M:test:dev -m api.core
 	@echo "Done."
 
 .PHONY: test
@@ -19,7 +19,7 @@ clean:
 .PHONY: repl
 repl:
 	@echo "Running..."
-	clj -M:dev:dev/run:test:cljs:repl:repl/run
+	clj -M:dev:test:repl:repl/run  -m api.core
 	@echo "Done."
 
 
@@ -45,5 +45,24 @@ build:
 	clojure -T:build org.corfield.build/clean
 
 	@echo "# build the project:"
-	clojure -T:build org.corfield.build/uber :lib xo/xo :main xo.core
+	clojure -T:build org.corfield.build/uber :lib api/api :main api.core
 	@echo "Done."
+
+.PHONY: docker
+docker:
+	@echo "Building docker db image..."
+	direnv exec . docker-compose up -d --build 
+	@echo "Done."
+
+.PHONY: docker-down
+docker-down:
+	@echo "Stopping and removing docker db container, image, volume"
+	docker-compose down -v --rmi all --remove-orphans
+	@echo "Done."
+
+.PHONY: sync-ignore
+sync-ignore:
+	@echo "Syncronizing .gitignore and .dockerignore files"
+	sort .gitignore .dockerignore | uniq > output.txt
+	cp output.txt .dockerignore
+	mv output.txt .gitignore

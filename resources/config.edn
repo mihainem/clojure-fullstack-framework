@@ -1,4 +1,5 @@
-{:server/jetty {:handler #ig/ref :server/app
-                :port 3000}
- :server/app {:jdbc-url #ig/ref :db/postgres}
- :db/postgres {:jdbc-url "jdbc-url"}}
+{:api/server {:handler #ig/ref :api/router
+              :port 3000}
+ :api/router {:jdbc-url #ig/ref :api/db}
+ :api/db {:jdbc-url "jdbc-url"}}
+
