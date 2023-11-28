@@ -12,7 +12,7 @@
    [reitit.swagger :as swagger]
    [reitit.swagger-ui :as swagger-ui]
    [reitit.ring.spec :as rs]
-   [api.routes :refer [routes]]
+   [api.users.routes :refer [routes]]
    [api.interceptors.exception :as api-exception]))
 
 
