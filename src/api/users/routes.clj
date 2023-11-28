@@ -1,14 +1,12 @@
 (ns api.users.routes
   (:require [api.users.handlers :as handle]
-            [schema.core :as s]
-            [api.responses :as resp]))
+            [schema.core :as s]))
 
 
 (defn routes
   [env]
   (let [db (:jdbc-url env)]
-    [["/users" {:get {:handler (handle/get-all-users db)
-                      #_:responses #_{200 {:body resp/users}}}
+    [["/users" {:get {:handler (handle/get-all-users db)}
                 :summary "list all users"}]
      ["/login" {:post {:parameters {:body {:username s/Str
                                            :password s/Str}}
