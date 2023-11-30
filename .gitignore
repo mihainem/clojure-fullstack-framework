@@ -25,3 +25,6 @@ config/dev/config.edn
 docker-compose.yml
 pom.xml
 target/
+.shadow-cljs
+node_modules
+resources/public/assets

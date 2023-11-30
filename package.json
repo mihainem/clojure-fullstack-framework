@@ -1,0 +1,26 @@
+{
+  "name": "xo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mihainem/xo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mihainem/xo/issues"
+  },
+  "homepage": "https://github.com/mihainem/xo#readme",
+  "devDependencies": {
+    "shadow-cljs": "^2.26.2"
+  }
+}
