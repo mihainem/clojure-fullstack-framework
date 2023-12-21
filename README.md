@@ -47,4 +47,4 @@ To get started with a specific branch, clone the repository and switch to the de
 ```bash
 git clone https://github.com/mihainem/clojure-fullstack-framework.git
 cd clojure-fullstack-framework
-git checkout clj-base  # Replace with the desired branch name
+git checkout clj+psdb+cljs  # Replace with the desired branch name
