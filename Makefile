@@ -45,5 +45,5 @@ build:
 	clojure -T:build org.corfield.build/clean
 
 	@echo "# build the project:"
-	clojure -T:build org.corfield.build/uber :lib xo/xo :main xo.core
+	clojure -T:build org.corfield.build/uber :lib api/api :main api.core
 	@echo "Done."
